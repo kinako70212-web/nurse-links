@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>看護師リンク集</title>
+
+<style>
+
+body{
+font-family: 'Segoe UI', sans-serif;
+margin:0;
+background:#f5fbf7;
+color:#333;
+}
+
+header{
+background:linear-gradient(90deg,#7fd6a3,#5bbf8a);
+color:white;
+padding:20px;
+font-size:24px;
+text-align:center;
+font-weight:bold;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:20px;
+}
+
+.card{
+
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+
+}
+
+.card h2{
+margin-top:0;
+font-size:18px;
+}
+
+input,select{
+padding:8px;
+margin:5px 0;
+width:100%;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+button{
+margin-top:10px;
+padding:8px;
+background:#4CAF7B;
+color:white;
+border:none;
+border-radius:6px;
+cursor:pointer;
+}
+
+button:hover{
+background:#3d9464;
+}
+
+a{
+display:block;
+padding:6px 0;
+color:#2e7d55;
+font-weight:bold;
+text-decoration:none;
+}
+
+.result{
+margin-top:10px;
+font-weight:bold;
+}
+
+.abbr{
+font-size:14px;
+line-height:1.6;
+}
+
+footer{
+text-align:center;
+padding:20px;
+font-size:12px;
+}
+
+.dark{
+background:#1f1f1f;
+color:white;
+}
+
+.dark .card{
+background:#2b2b2b;
+}
+
+.dark a{
+color:#90ee90;
+}
+
+</style>
+
+<script>
+
+function drip(){
+
+let v=document.getElementById("volume").value
+let t=document.getElementById("time").value
+
+let r=v/t
+
+document.getElementById("drip").innerHTML="滴下速度 "+r.toFixed(1)+" ml/h"
+
+}
+
+function drop(){
+
+let mlh=document.getElementById("mlh").value
+let set=document.getElementById("set").value
+
+let r=(mlh*set)/60
+
+document.getElementById("drop").innerHTML="滴下数 "+r.toFixed(1)+" 滴/分"
+
+}
+
+function bmi(){
+
+let h=document.getElementById("height").value/100
+let w=document.getElementById("weight").value
+
+let b=w/(h*h)
+
+document.getElementById("bmi").innerHTML="BMI "+b.toFixed(1)
+
+}
+
+function searchAbbr(){
+
+let input=document.getElementById("abbrSearch").value.toLowerCase()
+
+let items=document.querySelectorAll(".abbr div")
+
+items.forEach(function(i){
+
+if(i.innerText.toLowerCase().includes(input)){
+i.style.display="block"
+}else{
+i.style.display="none"
+}
+
+})
+
+}
+
+function dark(){
+
+document.body.classList.toggle("dark")
+
+}
+
+</script>
+
+</head>
+
+<body>
+
+<header>
+
+🌿 看護師リンク集
+
+<br>
+
+<button onclick="dark()">ダークモード</button>
+
+</header>
+
+<div class="container">
+
+<div class="grid">
+
+<div class="card">
+
+<h2>💧 点滴速度計算</h2>
+
+総輸液量 ml
+<input id="volume" type="number">
+
+時間 h
+<input id="time" type="number">
+
+<button onclick="drip()">計算</button>
+
+<div id="drip" class="result"></div>
+
+</div>
+
+<div class="card">
+
+<h2>💉 滴下数計算</h2>
+
+ml/h
+<input id="mlh" type="number">
+
+輸液セット
+<select id="set">
+
+<option value="20">20滴</option>
+<option value="60">60滴</option>
+
+</select>
+
+<button onclick="drop()">計算</button>
+
+<div id="drop" class="result"></div>
+
+</div>
+
+<div class="card">
+
+<h2>⚖ BMI計算</h2>
+
+身長 cm
+<input id="height" type="number">
+
+体重 kg
+<input id="weight" type="number">
+
+<button onclick="bmi()">計算</button>
+
+<div id="bmi" class="result"></div>
+
+</div>
+
+<div class="card">
+
+<h2>🏥 医療リンク</h2>
+
+<a href="https://www.mhlw.go.jp/">厚生労働省</a>
+<a href="https://www.pmda.go.jp/">PMDA</a>
+<a href="https://www.nurse.or.jp/">日本看護協会</a>
+<a href="https://www.jstage.jst.go.jp/">J-STAGE</a>
+
+</div>
+
+<div class="card">
+
+<h2>📚 医療略語検索</h2>
+
+<input id="abbrSearch" onkeyup="searchAbbr()" placeholder="略語検索">
+
+<div class="abbr">
+
+<div>ADL：日常生活動作</div>
+<div>SOAP：カルテ記録方式</div>
+<div>NPO：絶食</div>
+<div>PRN：必要時</div>
+<div>CABG：冠動脈バイパス</div>
+<div>PEG：胃ろう</div>
+<div>SpO2：酸素飽和度</div>
+<div>BP：血圧</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<footer>
+
+看護師リンク集  
+ナース向け便利ツール
+
+</footer>
+
+</body>
+
+</html>
