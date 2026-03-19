@@ -37,6 +37,12 @@ grid-template-columns:1fr 1fr;
 gap:20px;
 }
 
+@media(max-width:600px){
+.grid{
+grid-template-columns:1fr;
+}
+}
+
 .card{
 
 background:white;
@@ -110,6 +116,23 @@ background:#2b2b2b;
 color:#90ee90;
 }
 
+.abbr-card{
+background:#f0faf4;
+padding:10px;
+margin:8px 0;
+border-radius:8px;
+border-left:4px solid #4CAF7B;
+}
+
+.lab-card{
+background:#eef7ff;
+padding:10px;
+margin:8px 0;
+border-radius:8px;
+border-left:4px solid #4a90e2;
+}
+
+
 </style>
 
 <script>
@@ -147,23 +170,6 @@ document.getElementById("bmi").innerHTML="BMI "+b.toFixed(1)
 
 }
 
-function searchAbbr(){
-
-let input=document.getElementById("abbrSearch").value.toLowerCase()
-
-let items=document.querySelectorAll(".abbr div")
-
-items.forEach(function(i){
-
-if(i.innerText.toLowerCase().includes(input)){
-i.style.display="block"
-}else{
-i.style.display="none"
-}
-
-})
-
-}
 
 function dark(){
 
@@ -171,12 +177,203 @@ document.body.classList.toggle("dark")
 
 }
 
+const abbreviations = [
+
+{abbr:"ADL", meaning:"日常生活動作"},
+{abbr:"IADL", meaning:"手段的日常生活動作"},
+{abbr:"SOAP", meaning:"カルテ記録方式"},
+{abbr:"NPO", meaning:"絶食"},
+{abbr:"PRN", meaning:"必要時"},
+{abbr:"STAT", meaning:"直ちに"},
+{abbr:"SpO2", meaning:"酸素飽和度"},
+{abbr:"BP", meaning:"血圧"},
+{abbr:"HR", meaning:"心拍数"},
+{abbr:"RR", meaning:"呼吸数"},
+{abbr:"BT", meaning:"体温"},
+{abbr:"GCS", meaning:"グラスゴー昏睡尺度"},
+{abbr:"JCS", meaning:"ジャパンコーマスケール"},
+{abbr:"ICU", meaning:"集中治療室"},
+{abbr:"CCU", meaning:"冠疾患集中治療室"},
+{abbr:"ER", meaning:"救急外来"},
+{abbr:"OP", meaning:"手術"},
+{abbr:"IV", meaning:"静脈内"},
+{abbr:"IM", meaning:"筋肉内"},
+{abbr:"SC", meaning:"皮下"},
+{abbr:"PO", meaning:"経口"},
+{abbr:"NG", meaning:"経鼻胃管"},
+{abbr:"PEG", meaning:"胃ろう"},
+{abbr:"TPN", meaning:"中心静脈栄養"},
+{abbr:"PPN", meaning:"末梢静脈栄養"},
+{abbr:"BLS", meaning:"一次救命処置"},
+{abbr:"ACLS", meaning:"二次救命処置"},
+{abbr:"CPR", meaning:"心肺蘇生"},
+{abbr:"AED", meaning:"自動体外式除細動器"},
+{abbr:"ECG", meaning:"心電図"},
+{abbr:"CXR", meaning:"胸部X線"},
+{abbr:"CT", meaning:"コンピュータ断層撮影"},
+{abbr:"MRI", meaning:"磁気共鳴画像"},
+{abbr:"US", meaning:"超音波検査"},
+{abbr:"Dx", meaning:"診断"},
+{abbr:"Tx", meaning:"治療"},
+{abbr:"Hx", meaning:"既往歴"},
+{abbr:"Fx", meaning:"骨折"},
+{abbr:"Sx", meaning:"症状"},
+{abbr:"Px", meaning:"予後"},
+{abbr:"CHF", meaning:"心不全"},
+{abbr:"MI", meaning:"心筋梗塞"},
+{abbr:"HT", meaning:"高血圧"},
+{abbr:"DM", meaning:"糖尿病"},
+{abbr:"CKD", meaning:"慢性腎臓病"},
+{abbr:"COPD", meaning:"慢性閉塞性肺疾患"},
+{abbr:"ARDS", meaning:"急性呼吸窮迫症候群"},
+{abbr:"DVT", meaning:"深部静脈血栓症"},
+{abbr:"PE", meaning:"肺塞栓"},
+{abbr:"UTI", meaning:"尿路感染症"},
+{abbr:"GI", meaning:"消化管"},
+{abbr:"CNS", meaning:"中枢神経系"},
+{abbr:"PNS", meaning:"末梢神経系"},
+{abbr:"WBC", meaning:"白血球"},
+{abbr:"RBC", meaning:"赤血球"},
+{abbr:"Hb", meaning:"ヘモグロビン"},
+{abbr:"Plt", meaning:"血小板"},
+{abbr:"Na", meaning:"ナトリウム"},
+{abbr:"K", meaning:"カリウム"},
+{abbr:"Cl", meaning:"クロール"},
+{abbr:"BUN", meaning:"尿素窒素"},
+{abbr:"Cr", meaning:"クレアチニン"},
+{abbr:"AST", meaning:"アスパラギン酸アミノトランスフェラーゼ"},
+{abbr:"ALT", meaning:"アラニンアミノトランスフェラーゼ"},
+{abbr:"CRP", meaning:"C反応性タンパク"},
+{abbr:"Alb", meaning:"アルブミン"},
+{abbr:"TP", meaning:"総タンパク"},
+{abbr:"PT", meaning:"プロトロンビン時間"},
+{abbr:"APTT", meaning:"活性化部分トロンボプラスチン時間"},
+{abbr:"INR", meaning:"国際標準比"},
+{abbr:"SaO2", meaning:"動脈血酸素飽和度"},
+{abbr:"PaO2", meaning:"動脈血酸素分圧"},
+{abbr:"PaCO2", meaning:"動脈血二酸化炭素分圧"},
+{abbr:"FiO2", meaning:"吸入酸素濃度"},
+{abbr:"MAP", meaning:"平均血圧"},
+{abbr:"CO", meaning:"心拍出量"},
+{abbr:"CI", meaning:"心係数"},
+{abbr:"SV", meaning:"一回拍出量"},
+{abbr:"SVR", meaning:"全身血管抵抗"},
+{abbr:"I&O", meaning:"入出量"},
+{abbr:"LOS", meaning:"入院期間"},
+{abbr:"DNR", meaning:"蘇生措置拒否"},
+{abbr:"DNAR", meaning:"心肺蘇生不要指示"},
+{abbr:"QOL", meaning:"生活の質"},
+{abbr:"AD", meaning:"アルツハイマー病"},
+{abbr:"PD", meaning:"パーキンソン病"},
+{abbr:"RA", meaning:"関節リウマチ"},
+{abbr:"OA", meaning:"変形性関節症"},
+{abbr:"HF", meaning:"心不全"},
+{abbr:"AF", meaning:"心房細動"},
+{abbr:"VF", meaning:"心室細動"},
+{abbr:"VT", meaning:"心室頻拍"},
+{abbr:"PVC", meaning:"心室性期外収縮"},
+{abbr:"PAC", meaning:"心房性期外収縮"}
+];
+
+function searchAbbr(){
+
+let input=document.getElementById("abbrSearch").value.toLowerCase()
+
+if(input === ""){
+document.getElementById("abbrResult").innerHTML=""
+return
+}
+
+let result=""
+
+abbreviations.forEach(function(a){
+
+if(
+a.abbr.toLowerCase().includes(input) ||
+a.meaning.includes(input)
+){
+
+
+result += `
+<div class="abbr-card">
+<strong>${a.abbr}</strong><br>
+${a.meaning}
+</div>
+
+}
+
+})
+
+document.getElementById("abbrResult").innerHTML=result
+
+}
+
+
+const labs = [
+
+{name:"Na", jp:"ナトリウム", normal:"135-145 mEq/L", disease:"低：脱水・SIADH / 高：脱水・腎不全"},
+{name:"K", jp:"カリウム", normal:"3.5-5.0 mEq/L", disease:"低：利尿薬・嘔吐 / 高：腎不全・溶血"},
+{name:"Cl", jp:"クロール", normal:"98-108 mEq/L", disease:"低：嘔吐 / 高：脱水"},
+{name:"BUN", jp:"尿素窒素", normal:"8-20 mg/dL", disease:"高：腎不全・脱水"},
+{name:"Cr", jp:"クレアチニン", normal:"0.6-1.2 mg/dL", disease:"高：腎機能低下"},
+{name:"WBC", jp:"白血球", normal:"4000-9000 /μL", disease:"高：感染・炎症 / 低：骨髄抑制"},
+{name:"RBC", jp:"赤血球", normal:"400-550万 /μL", disease:"低：貧血"},
+{name:"Hb", jp:"ヘモグロビン", normal:"13-17 g/dL", disease:"低：貧血"},
+{name:"Plt", jp:"血小板", normal:"15-35万 /μL", disease:"低：出血傾向"},
+{name:"CRP", jp:"CRP", normal:"0.3以下 mg/dL", disease:"高：炎症・感染"},
+{name:"AST", jp:"AST", normal:"10-40 U/L", disease:"高：肝障害"},
+{name:"ALT", jp:"ALT", normal:"5-45 U/L", disease:"高：肝障害"},
+{name:"Alb", jp:"アルブミン", normal:"3.5-5.0 g/dL", disease:"低：栄養不良"},
+{name:"Glucose", jp:"血糖", normal:"70-110 mg/dL", disease:"高：糖尿病"},
+{name:"HbA1c", jp:"HbA1c", normal:"4.6-6.2 %", disease:"高：糖尿病"}
+
+];
+
+function searchLab(){
+
+let input = document.getElementById("labSearch").value.toLowerCase()
+
+if(input === ""){
+document.getElementById("labResult").innerHTML = ""
+return
+}
+
+let result = ""
+
+labs.forEach(function(l){
+
+if(
+l.name.toLowerCase().includes(input) ||
+l.jp.includes(input) ||
+l.disease.toLowerCase().includes(input)
+)
+
+result += `
+<div class="lab-card">
+<strong>${l.name}</strong><br>
+正常値：${l.normal}<br>
+疑われる疾患：${l.disease}
+</div>
+`
+
+}
+
+})
+
+if(result === ""){
+result = "該当なし"
+}
+
+document.getElementById("labResult").innerHTML = result
+
+}
+
+
 </script>
 
 </head>
 
 <body>
-
 <header>
 
 🌿 看護師リンク集
@@ -261,16 +458,20 @@ ml/h
 
 <input id="abbrSearch" onkeyup="searchAbbr()" placeholder="略語検索">
 
-<div class="abbr"id="abbrList" style="display:none">
+<div id="abbrResult"></div>
 
-<div>ADL：日常生活動作</div>
-<div>SOAP：カルテ記録方式</div>
-<div>NPO：絶食</div>
-<div>PRN：必要時</div>
-<div>CABG：冠動脈バイパス</div>
-<div>PEG：胃ろう</div>
-<div>SpO2：酸素飽和度</div>
-<div>BP：血圧</div>
+</div>
+
+<div class="card">
+
+<h2>🧪 検査値検索</h2>
+
+<input id="labSearch" onkeyup="searchLab()" placeholder="検査名で検索（例：Na, Hb）">
+
+<div id="labResult"></div>
+
+</div>
+
 
 </div>
 
