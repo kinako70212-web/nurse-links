@@ -288,19 +288,19 @@ let result=""
 
 abbreviations.forEach(function(a){
 
-if(
-a.abbr.toLowerCase().includes(input) ||
-a.meaning.includes(input)
-){
+  if(
+    a.abbr.toLowerCase().includes(input) ||
+    a.meaning.includes(input)
+  ){
 
+    result += `
+    <div class="abbr-card">
+    <strong>${a.abbr}</strong><br>
+    ${a.meaning}
+    </div>
+    `
 
-result += `
-<div class="abbr-card">
-<strong>${a.abbr}</strong><br>
-${a.meaning}
-</div>
-
-}
+  }
 
 })
 
