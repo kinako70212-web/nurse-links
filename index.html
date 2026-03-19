@@ -344,9 +344,9 @@ labs.forEach(function(l){
 
 if(
 l.name.toLowerCase().includes(input) ||
-l.jp.includes(input) ||
+l.jp.toLowerCase().includes(input) ||
 l.disease.toLowerCase().includes(input)
-)
+){
 
 result += `
 <div class="lab-card">
@@ -360,15 +360,10 @@ result += `
 
 })
 
-if(result === ""){
-result = "該当なし"
-}
-
-document.getElementById("labResult").innerHTML = result
+document.getElementById("labResult").innerHTML =
+result === "" ? "該当なし" : result
 
 }
-
-
 </script>
 
 </head>
