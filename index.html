@@ -331,7 +331,7 @@ const labs = [
 
 function searchLab(){
 
-let input = document.getElementById("labSearch").value.toLowerCase()
+let input = document.getElementById("labSearch").value.toLowerCase().trim()
 
 if(input === ""){
 document.getElementById("labResult").innerHTML = ""
@@ -343,9 +343,9 @@ let result = ""
 labs.forEach(function(l){
 
 if(
-l.name.toLowerCase().includes(input) ||
-l.jp.toLowerCase().includes(input) ||
-l.disease.toLowerCase().includes(input)
+  l.name.toLowerCase().includes(input) ||
+  l.jp.includes(input) ||
+  l.disease.toLowerCase().includes(input)
 ){
 
 result += `
